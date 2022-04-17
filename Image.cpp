@@ -1,6 +1,8 @@
 //
 // Created by floodd on 23/03/2022.
 //
+#include <cmath>
+#include <iomanip>
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -108,15 +110,30 @@ void Image::flipVertically() {
 }
 
 void Image::AdditionalFunction2() {
-
 }
 
 void Image::AdditionalFunction3() {
 
 }
 
+//https://www.geeksforgeeks.org/cpp14-program-to-turn-an-image-by-90-degree/?ref=rp
+//rotate 270 image
 void Image::AdditionalFunction1() {
+    Rgb *tempArr = new Rgb[w*h];
 
+    for(int y = 0; y < h; y++)
+    {
+        for(int x = 0; x < w;x++)
+        {
+            int r = ((x * h) - (h - y - 1));
+
+            tempArr[r] = pixels[y*w+x];
+        }
+    }
+    pixels = tempArr;
+    int t= w;
+    w= h;
+    h=t;
 }
 
 /* Functions used by the GUI - DO NOT MODIFY */
