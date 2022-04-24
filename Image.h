@@ -11,6 +11,8 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <vector>
+#include <string>
 using namespace std;
 struct Rgb
 {
@@ -47,9 +49,9 @@ public:
     void greyScale();
     void flipHorizontal();
     void flipVertically();
-    void AdditionalFunction1();
-    void AdditionalFunction2();
-    void AdditionalFunction3();
+    void rotate270();
+    void invertColor();
+    void turnImageIntoBlack();
 
     /*Functions used in the GUI - DO NOT MODIFY */
     Rgb* getImage();

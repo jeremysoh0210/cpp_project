@@ -8,7 +8,8 @@
 #include <iomanip>
 #include <cstring>
 #include "Image.h"
-
+#include <iostream>
+#include <cmath>
 
 bool Image::load(string filename) {
     ifstream ifs(filename, std::ios::binary);
@@ -109,31 +110,40 @@ void Image::flipVertically() {
     }
 }
 
-void Image::AdditionalFunction2() {
+//https://stackoverflow.com/questions/65144598/c-cuda-invert-image-colors
+void Image::invertColor() {
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
+            pixels[y * w + x].r = 256 - pixels[y * w + x].r;
+            pixels[y * w + x].g = 256 - pixels[y * w + x].g;
+            pixels[y * w + x].b = 256 - pixels[y * w + x].b;
+        }
+    }
 }
 
-void Image::AdditionalFunction3() {
 
+void Image::turnImageIntoBlack() {
+    for (int i = 0; i < w * h; ++i) {
+        this->pixels[i].r = 0;
+        this->pixels[i].g = 0;
+        this->pixels[i].b = 0;
+    }
 }
 
-//https://www.geeksforgeeks.org/cpp14-program-to-turn-an-image-by-90-degree/?ref=rp
-//rotate 270 image
-void Image::AdditionalFunction1() {
-    Rgb *tempArr = new Rgb[w*h];
+void Image::rotate270() {
+    Rgb *tempArr = new Rgb[w * h];
 
-    for(int y = 0; y < h; y++)
-    {
-        for(int x = 0; x < w;x++)
-        {
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
             int r = ((x * h) - (h - y - 1));
 
-            tempArr[r] = pixels[y*w+x];
+            tempArr[r] = pixels[y * w + x];
         }
     }
     pixels = tempArr;
-    int t= w;
-    w= h;
-    h=t;
+    int t = w;
+    w = h;
+    h = t;
 }
 
 /* Functions used by the GUI - DO NOT MODIFY */

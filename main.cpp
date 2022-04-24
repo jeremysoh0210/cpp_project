@@ -121,15 +121,15 @@ void processMenu(HWND hWnd, WPARAM wParam)
             break;
         case IDM_EDIT_AD1:
 
-            image->AdditionalFunction1();
+            image->rotate270();
             break;
         case IDM_EDIT_AD2:
 
-            image->AdditionalFunction2();
+            image->invertColor();
             break;
         case IDM_EDIT_AD3:
 
-            image->AdditionalFunction3();
+            image->turnImageIntoBlack();
             break;
         case IDM_EDIT_Reset:
             if(fileType=="ppm")
