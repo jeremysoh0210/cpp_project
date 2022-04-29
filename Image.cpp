@@ -34,10 +34,26 @@ bool Image::load(string filename) {
     }
     return false;
 }
-
+//https://www.scratchapixel.com/lessons/digital-imaging/simple-image-manipulations
+//https://www.scratchapixel.com/lessons/digital-imaging/digital-images/display-image-to-screen
 bool Image::loadRaw(string filename) {
+    ifstream in(filename);
 
-    return false;
+    if (in.good()) {
+        in >> w;
+        in >> h;
+
+        for (int i = 0; i < w * h; ++i) {
+            float r, g, b;
+            in >> r >> g >> b;
+            pixels[i].r = pow(r, 1 / 2.2) * 255;
+            pixels[i].g = pow(r, 1 / 2.2) * 255;
+            pixels[i].b = pow(r, 1 / 2.2) * 255;
+            cout << r << pixels[i].r << endl;
+        }
+        in.close();
+    }
+    return true;
 }
 
 bool Image::savePPM(string filename) {
@@ -122,11 +138,12 @@ void Image::invertColor() {
 }
 
 
-void Image::turnImageIntoBlack() {
+void Image::turnImageIntoSkyblue() {
+    const float r = 1;
+    const float g = 0;
+    const float b = 0;
     for (int i = 0; i < w * h; ++i) {
-        this->pixels[i].r = 0;
-        this->pixels[i].g = 0;
-        this->pixels[i].b = 0;
+        this->pixels[i].r = r;
     }
 }
 
@@ -145,7 +162,27 @@ void Image::rotate270() {
     w = h;
     h = t;
 }
+//https://www.youtube.com/watch?v=Hdfuv0pcZ_c
+void Image::advanceFeature(int newX, int newY, int newWidth, int newHeight) {
+    Image *cropImage = new Image[newWidth, newHeight];
+    for (int y = 0; y < newHeight; y++) {
+        if ((y + newY) > h) {
+            break;
+        }
+        for (int x = 0; x < newWidth; x++) {
+            if ((x + newX) > w) {
+                break;
+            }
+            memcpy(&cropImage->pixels[(x + y * newWidth)],&this->pixels[(x + newX + (y + newY) * w)], 3);
+        }
+    }
+    w = newWidth;
+    h = newHeight;
 
+    delete this->pixels;
+    this->pixels = cropImage->pixels;
+    cropImage = nullptr;
+}
 /* Functions used by the GUI - DO NOT MODIFY */
 int Image::getWidth() {
     return w;

@@ -51,7 +51,8 @@ public:
     void flipVertically();
     void rotate270();
     void invertColor();
-    void turnImageIntoBlack();
+    void turnImageIntoSkyblue();
+    void advanceFeature(int newX, int newY, int newWidth, int newHeight);
 
     /*Functions used in the GUI - DO NOT MODIFY */
     Rgb* getImage();
